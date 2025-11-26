@@ -6,14 +6,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { db } from "@/drizzle/db"
-import { InterviewTable } from "@/drizzle/schema"
+import { db, InterviewTable } from "@/lib/dbAdapter"
 import { getInterviewJobInfoTag } from "@/features/interviews/dbCache"
 import { JobInfoBackLink } from "@/features/jobInfos/components/JobInfoBackLink"
 import { getJobInfoIdTag } from "@/features/jobInfos/dbCache"
 import { formatDateTime } from "@/lib/formatters"
 import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser"
-import { and, desc, eq, isNotNull } from "drizzle-orm"
+import { and, desc, eq, isNotNull } from "@/lib/dbAdapter"
 import { ArrowRightIcon, Loader2Icon, PlusIcon } from "lucide-react"
 import { cacheTag } from "next/dist/server/use-cache/cache-tag"
 import Link from "next/link"

@@ -1,8 +1,7 @@
-import { db } from "@/drizzle/db"
-import { UserTable } from "@/drizzle/schema"
+import { db, UserTable } from "@/lib/dbAdapter"
 import { getUserIdTag } from "@/features/users/dbCache"
 import { auth } from "@clerk/nextjs/server"
-import { eq } from "drizzle-orm"
+import { eq } from "@/lib/dbAdapter"
 import { cacheTag } from "next/dist/server/use-cache/cache-tag"
 
 export async function getCurrentUser({ allData = false } = {}) {

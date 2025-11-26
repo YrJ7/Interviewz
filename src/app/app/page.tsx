@@ -7,13 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { db } from "@/drizzle/db"
-import { JobInfoTable } from "@/drizzle/schema"
+// Drizzle DB replaced by external API; fetch job infos from Express server
 import { JobInfoForm } from "@/features/jobInfos/components/JobInfoForm"
 import { getJobInfoUserTag } from "@/features/jobInfos/dbCache"
 import { formatExperienceLevel } from "@/features/jobInfos/lib/formatters"
 import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser"
-import { desc, eq } from "drizzle-orm"
+// drizzle-orm imports removed; data now comes from the Express API
 import { ArrowRightIcon, Loader2Icon, PlusIcon } from "lucide-react"
 import { cacheTag } from "next/dist/server/use-cache/cache-tag"
 import Link from "next/link"
@@ -127,8 +126,22 @@ async function getJobInfos(userId: string) {
   "use cache"
   cacheTag(getJobInfoUserTag(userId))
 
-  return db.query.JobInfoTable.findMany({
-    where: eq(JobInfoTable.userId, userId),
-    orderBy: desc(JobInfoTable.updatedAt),
-  })
+  const serverUrl = process.env.SERVER_URL || "http://localhost:4000"
+  const res = await fetch(`${serverUrl}/api/job-infos?userId=${encodeURIComponent(
+    userId
+  )}`, { cache: "no-store" })
+  if (!res.ok) {
+    throw new Error("Failed to fetch job infos")
+  }
+  const data = await res.json()
+  // normalize _id to id for compatibility with existing UI
+  return data.map((j: any) => ({
+    id: j._id,
+    name: j.name,
+    description: j.description,
+    title: j.title,
+    experienceLevel: j.experienceLevel,
+    createdAt: j.createdAt,
+    updatedAt: j.updatedAt,
+  }))
 }

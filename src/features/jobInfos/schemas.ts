@@ -1,4 +1,4 @@
-import { experienceLevels } from "@/drizzle/schema"
+import { experienceLevels } from "@/lib/dbAdapter"
 import z from "zod"
 
 export const jobInfoSchema = z.object({

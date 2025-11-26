@@ -1,4 +1,4 @@
-import { JobInfoTable } from "@/drizzle/schema"
+import { JobInfoTable } from "@/lib/dbAdapter"
 import { fetchChatMessages } from "../hume/lib/api"
 import { generateText } from "ai"
 import { google } from "./models/google"

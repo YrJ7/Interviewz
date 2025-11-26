@@ -9,24 +9,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { db } from "@/drizzle/db"
-import { JobInfoTable } from "@/drizzle/schema"
+import { db, JobInfoTable } from "@/lib/dbAdapter"
 import { getJobInfoIdTag } from "@/features/jobInfos/dbCache"
 import { formatExperienceLevel } from "@/features/jobInfos/lib/formatters"
 import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser"
-import { and, eq } from "drizzle-orm"
+import { and, eq } from "@/lib/dbAdapter"
 import { ArrowRightIcon } from "lucide-react"
 import { cacheTag } from "next/dist/server/use-cache/cache-tag"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
 const options = [
-  {
-    label: "Answer Technical Questions",
-    description:
-      "Challenge yourself with practice questions tailored to your job description.",
-    href: "questions",
-  },
   {
     label: "Practice Interviewing",
     description: "Simulate a real interview with AI-powered mock interviews.",

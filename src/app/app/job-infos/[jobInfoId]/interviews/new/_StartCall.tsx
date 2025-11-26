@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { env } from "@/data/env/client"
-import { JobInfoTable } from "@/drizzle/schema"
+import { JobInfoTable } from "@/lib/dbAdapter"
 import { createInterview, updateInterview } from "@/features/interviews/actions"
 import { errorToast } from "@/lib/errorToast"
 import { CondensedMessages } from "@/services/hume/components/CondensedMessages"

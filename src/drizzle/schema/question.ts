@@ -1,29 +1,8 @@
-import { pgEnum, pgTable, uuid, varchar } from "drizzle-orm/pg-core"
-import { createdAt, id, updatedAt } from "../schemaHelpers"
-import { relations } from "drizzle-orm"
-import { JobInfoTable } from "./jobInfo"
+// Question schema removed — questions feature was deleted from the project.
+// This file is retained as a placeholder to avoid build-time import errors in
+// other parts of the repo. Remove this file entirely when all references
+// to questions are cleared.
 
-export const questionDifficulties = ["easy", "medium", "hard"] as const
-export type QuestionDifficulty = (typeof questionDifficulties)[number]
-export const questionDifficultyEnum = pgEnum(
-  "questions_question_difficulty",
-  questionDifficulties
-)
+// Questions schema intentionally removed. No exports.
+export {}
 
-export const QuestionTable = pgTable("questions", {
-  id,
-  jobInfoId: uuid()
-    .references(() => JobInfoTable.id, { onDelete: "cascade" })
-    .notNull(),
-  text: varchar().notNull(),
-  difficulty: questionDifficultyEnum().notNull(),
-  createdAt,
-  updatedAt,
-})
-
-export const questionsRelations = relations(QuestionTable, ({ one }) => ({
-  jobInfo: one(JobInfoTable, {
-    fields: [QuestionTable.jobInfoId],
-    references: [JobInfoTable.id],
-  }),
-}))

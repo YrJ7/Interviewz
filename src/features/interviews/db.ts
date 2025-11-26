@@ -1,32 +1,25 @@
-import { db } from "@/drizzle/db"
-import { InterviewTable } from "@/drizzle/schema"
 import { revalidateInterviewCache } from "./dbCache"
-import { eq } from "drizzle-orm"
 
-export async function insertInterview(
-  interview: typeof InterviewTable.$inferInsert
-) {
-  const [newInterview] = await db
-    .insert(InterviewTable)
-    .values(interview)
-    .returning({ id: InterviewTable.id, jobInfoId: InterviewTable.jobInfoId })
+const SERVER_URL = process.env.SERVER_URL ?? "http://localhost:4000"
 
-  revalidateInterviewCache(newInterview)
-
-  return newInterview
+export async function insertInterview(interview: any) {
+  const res = await fetch(`${SERVER_URL}/api/interviews`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(interview),
+  })
+  const data = await res.json()
+  revalidateInterviewCache(data)
+  return data
 }
 
-export async function updateInterview(
-  id: string,
-  interview: Partial<typeof InterviewTable.$inferInsert>
-) {
-  const [newInterview] = await db
-    .update(InterviewTable)
-    .set(interview)
-    .where(eq(InterviewTable.id, id))
-    .returning({ id: InterviewTable.id, jobInfoId: InterviewTable.jobInfoId })
-
-  revalidateInterviewCache(newInterview)
-
-  return newInterview
+export async function updateInterview(id: string, interview: any) {
+  const res = await fetch(`${SERVER_URL}/api/interviews/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(interview),
+  })
+  const data = await res.json()
+  revalidateInterviewCache(data)
+  return data
 }

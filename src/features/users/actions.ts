@@ -2,9 +2,7 @@
 
 import { cacheTag } from "next/dist/server/use-cache/cache-tag"
 import { getUserIdTag } from "./dbCache"
-import { db } from "@/drizzle/db"
-import { UserTable } from "@/drizzle/schema"
-import { eq } from "drizzle-orm"
+import { db, UserTable, eq } from "@/lib/dbAdapter"
 
 export async function getUser(id: string) {
   "use cache"

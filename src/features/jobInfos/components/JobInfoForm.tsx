@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { experienceLevels, JobInfoTable } from "@/drizzle/schema/jobInfo"
+import { experienceLevels, JobInfoTable } from "@/lib/dbAdapter"
 import { Button } from "@/components/ui/button"
 import {
   Form,

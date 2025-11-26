@@ -1,11 +1,10 @@
-import { db } from "@/drizzle/db"
-import { JobInfoTable } from "@/drizzle/schema"
+import { db, JobInfoTable } from "@/lib/dbAdapter"
 import { getJobInfoIdTag } from "@/features/jobInfos/dbCache"
 import { canRunResumeAnalysis } from "@/features/resumeAnalyses/permissions"
 import { PLAN_LIMIT_MESSAGE } from "@/lib/errorToast"
 import { analyzeResumeForJob } from "@/services/ai/resumes/ai"
 import { getCurrentUser } from "@/services/clerk/lib/getCurrentUser"
-import { and, eq } from "drizzle-orm"
+import { and, eq } from "@/lib/dbAdapter"
 import { cacheTag } from "next/dist/server/use-cache/cache-tag"
 
 export async function POST(req: Request) {

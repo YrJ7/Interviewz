@@ -1,5 +1,3 @@
-import { env } from "@/data/env/server"
-import { drizzle } from "drizzle-orm/node-postgres"
-import * as schema from "@/drizzle/schema"
+// Drizzle compatibility shim removed. Use `@/lib/dbAdapter` instead.
+export {}
 
-export const db = drizzle(env.DATABASE_URL, { schema })
